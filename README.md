@@ -1,10 +1,9 @@
 **Project Structure**
 
-osi_project/
-├── main.c
-├── layers.c
-├── layers.h
-└── Makefile
+- main.c
+- layers.h
+- layers.c
+- Makefile
 
 **How It Works**
 
@@ -67,3 +66,9 @@ Created to demonstrate complete OSI layer data flow using simple C code.
 **License**
 
 This project is open and free to use in your GitHub repositories.
+
+**future updates**
+
+
+
+
