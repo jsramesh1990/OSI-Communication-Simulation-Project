@@ -68,7 +68,37 @@ Created to demonstrate complete OSI layer data flow using simple C code.
 This project is open and free to use in your GitHub repositories.
 
 **future updates**
+1. Add color-coded layer logs
 
+Use ANSI colors to make output readable:
+
+Green → Application
+
+Yellow → Transport
+
+Blue → Network
+
+Red → Physical
+
+2. Add timestamps
+
+Print when each layer is activated.
+
+3. Add random error simulation
+
+At DataLink or Physical layer:
+
+Corrupt bits
+
+Drop frames
+
+Retransmit
+
+4. Add command-line input
+
+Allow:
+
+   ./osi "My custom message"
 
 
 
