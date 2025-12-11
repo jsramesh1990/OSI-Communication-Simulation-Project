@@ -1,0 +1,16 @@
+OSI-MULTI-PLATFORM-PROJECT/
+│
+├── user_app/
+│   ├── python_app.py
+│
+├── server/
+│   ├── main.c
+│   ├── layers.c
+│   ├── layers.h
+│   ├── Makefile
+│
+└── client/
+    ├── main.c
+    ├── layers.c
+    ├── layers.h
+    ├── Makefile 
