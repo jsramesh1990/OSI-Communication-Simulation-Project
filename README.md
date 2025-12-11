@@ -125,6 +125,7 @@ Each layer adds a header.
 2️Server processing (RX → process → TX)
 
 The server:
+```
 
 Decapsulates
 
@@ -133,6 +134,7 @@ Processes data
 Re-encapsulates a response
 
 Sends back to client
+```
 
 3️Python App displays ZIP-ZAG
 
@@ -192,7 +194,7 @@ POSIX Sockets
 
 JSON text protocol
 
-🚀 Future Enhancements
+#    Future Enhancements
 
 Color-coded terminal layers
 
@@ -204,15 +206,15 @@ UDP mode
 
 Real NIC info injection
 
-👤 Author
+#    Author
 
-Developed by Sebastian Ramesh S
+Developed by S S R
 
 Embedded Systems Developer
 Embedded Linux Developer
 Yocto BSP Engineer
 Linux Device Driver Engineer
 
-📜 License
+#    License
 
 This project is open and free to use in your GitHub repositories.
