@@ -185,6 +185,7 @@ Python only receives logs and visualizes progress.
 All OSI logic is performed in C on both ends.
 
 #    Technologies Used
+```
 
 C (Server/Client networking + OSI stack)
 
@@ -193,8 +194,10 @@ Python 3 (User-level visualization)
 POSIX Sockets
 
 JSON text protocol
+```
 
 #    Future Enhancements
+```
 
 Color-coded terminal layers
 
@@ -205,15 +208,18 @@ Multithreaded server
 UDP mode
 
 Real NIC info injection
+```
 
 #    Author
 
 Developed by S S R
+```
 
 Embedded Systems Developer
 Embedded Linux Developer
 Yocto BSP Engineer
 Linux Device Driver Engineer
+```
 
 #    License
 
