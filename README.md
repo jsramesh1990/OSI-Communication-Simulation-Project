@@ -1,104 +1,202 @@
-**Project Structure**
+📘 OSI-MULTI-PLATFORM-PROJECT
 
-- main.c
-- layers.h
-- layers.c
-- Makefile
+A complete multi-platform OSI model simulation involving:
 
-**How It Works**
+Client (C program)
 
-When the program runs:
+Server (C program)
 
-Application layer starts with the raw message.
+User Application (Python)
 
-Each OSI layer adds its own header.
+The Client and Server each implement a full 7-layer OSI stack (encapsulation + decapsulation).
+The Python user application visualizes the communication by printing OSI layer progress after every 2 layers are completed (zip-zag style).
 
-The message passes down to the Physical layer.
+📂 Project Structure
+OSI-MULTI-PLATFORM-PROJECT/
+│
+├── user_app/
+│   ├── python_app.py
+│
+├── server/
+│   ├── main.c
+│   ├── layers.c
+│   ├── layers.h
+│   ├── Makefile
+│
+└── client/
+    ├── main.c
+    ├── layers.c
+    ├── layers.h
+    ├── Makefile
 
-The Physical layer simulates transmission.
+🧠 Project Overview
 
-Receiver side begins decapsulation.
+This project demonstrates multi-platform communication using OSI principles:
 
-Each layer removes its header.
+✔ Client (C)
 
-Final message reaches the receiving Application layer.
+Encapsulates message through each OSI layer.
 
-The project demonstrates full TX → RX communication.
+Sends structured data (JSON format) to the server.
 
-**How To Build and Run**
-1️⃣ Build the program
+Receives reply from server and decapsulates.
 
-Run:
+✔ Server (C)
 
+Receives encapsulated message.
+
+Decapsulates through 7 OSI layers.
+
+Re-encapsulates reply and sends back.
+
+✔ User Application (Python)
+
+Connects to Client.
+
+Receives OSI layer logs.
+
+Prints OSI flow two layers at a time:
+
+Example output:
+
+[TX]
+Application → Presentation
+  ✔ Layers 1-2 completed
+
+Session → Transport
+  ✔ Layers 3-4 completed
+
+Network → DataLink
+  ✔ Layers 5-6 completed
+
+Physical
+  ✔ Layer 7 completed
+
+
+This is your requested zip-zag visualization.
+
+🧱 OSI Layers Implemented
+
+The following layers are simulated:
+
+Application
+
+Presentation
+
+Session
+
+Transport
+
+Network
+
+DataLink
+
+Physical
+
+Each layer has:
+
+LayerName_encapsulate()
+LayerName_decapsulate()
+
+
+Registered inside layers.c.
+
+⚙️ How It Works
+1️⃣ Client → Server (TX Flow)
+Application
+Presentation
+Session
+Transport
+Network
+DataLink
+Physical
+
+
+Each layer adds a header.
+
+2️⃣ Server processing (RX → process → TX)
+
+The server:
+
+Decapsulates
+
+Processes data
+
+Re-encapsulates a response
+
+Sends back to client
+
+3️⃣ Python App displays ZIP-ZAG
+
+The Python user app reads:
+
+{
+  "direction": "TX",
+  "layers": ["Application", "Presentation", ...],
+  "payload": "Hello"
+}
+
+
+And prints two layers at a time.
+
+🛠 Build Instructions
+Build Server
+cd server
 make
-2️⃣ Run the binary
-./osi
 
-**OSI Layer Mapping in Code**
+Build Client
+cd client
+make
 
-Each layer has two functions:
+▶️ Run Instructions
+Start Server
+./server
 
-Send path (TX): Layer_Send()
+Start Client
+./client
 
-Receive path (RX): Layer_Receive()
+Start Python Application
+python3 python_app.py
+
+📡 Communication Flow
+Python User App  ⇄  Client (C OSI stack) ⇄ Server (C OSI stack)
 
 
-**Extend the Project**
+Python only receives logs and visualizes progress.
 
-You can enhance it by adding:
+All OSI logic is performed in C on both ends.
 
-Real TCP sockets
+🔧 Technologies Used
 
-Logging to files
+C (Server/Client networking + OSI stack)
 
-Multi-threaded sender/receiver
+Python 3 (User-level visualization)
 
-Error simulation at layers
+POSIX Sockets
 
-Packet corruption and retry logic
+JSON text protocol
 
-If you'd like these upgrades, just ask!
+🚀 Future Enhancements
 
-**Author**
+Color-coded terminal layers
 
-Created to demonstrate complete OSI layer data flow using simple C code.
+Retransmission & packet corruption simulation
 
-**License**
+Multithreaded server
+
+UDP mode
+
+Real NIC info injection
+
+👤 Author
+
+Developed by Sebastian Ramesh S
+
+Embedded Systems Developer
+Embedded Linux Developer
+Yocto BSP Engineer
+Linux Device Driver Engineer
+
+📜 License
 
 This project is open and free to use in your GitHub repositories.
-
-**future updates**
-1. Add color-coded layer logs
-
-Use ANSI colors to make output readable:
-
-Green → Application
-
-Yellow → Transport
-
-Blue → Network
-
-Red → Physical
-
-2. Add timestamps
-
-Print when each layer is activated.
-
-3. Add random error simulation
-
-At DataLink or Physical layer:
-
-Corrupt bits
-
-Drop frames
-
-Retransmit
-
-4. Add command-line input
-
-Allow:
-
-   ./osi "My custom message"
-
-
-
