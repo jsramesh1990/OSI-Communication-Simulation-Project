@@ -1,17 +1,20 @@
-📘 OSI-MULTI-PLATFORM-PROJECT
+##    OSI-MULTI-PLATFORM-PROJECT
 
 A complete multi-platform OSI model simulation involving:
+```
 
 Client (C program)
 
 Server (C program)
 
 User Application (Python)
+```
 
 The Client and Server each implement a full 7-layer OSI stack (encapsulation + decapsulation).
 The Python user application visualizes the communication by printing OSI layer progress after every 2 layers are completed (zip-zag style).
 
-📂 Project Structure
+#    Project Structure
+```
 OSI-MULTI-PLATFORM-PROJECT/
 │
 ├── user_app/
@@ -28,12 +31,13 @@ OSI-MULTI-PLATFORM-PROJECT/
     ├── layers.c
     ├── layers.h
     ├── Makefile
+```
 
-🧠 Project Overview
+#    Project Overview
 
 This project demonstrates multi-platform communication using OSI principles:
 
-✔ Client (C)
+Client (C)
 
 Encapsulates message through each OSI layer.
 
@@ -41,7 +45,7 @@ Sends structured data (JSON format) to the server.
 
 Receives reply from server and decapsulates.
 
-✔ Server (C)
+Server (C)
 
 Receives encapsulated message.
 
@@ -49,7 +53,7 @@ Decapsulates through 7 OSI layers.
 
 Re-encapsulates reply and sends back.
 
-✔ User Application (Python)
+User Application (Python)
 
 Connects to Client.
 
@@ -58,6 +62,7 @@ Receives OSI layer logs.
 Prints OSI flow two layers at a time:
 
 Example output:
+```
 
 [TX]
 Application → Presentation
@@ -71,13 +76,14 @@ Network → DataLink
 
 Physical
   ✔ Layer 7 completed
-
+```
 
 This is your requested zip-zag visualization.
 
-🧱 OSI Layers Implemented
+#    OSI Layers Implemented
 
 The following layers are simulated:
+```
 
 Application
 
@@ -92,17 +98,19 @@ Network
 DataLink
 
 Physical
+```
 
 Each layer has:
-
+```
 LayerName_encapsulate()
 LayerName_decapsulate()
-
+```
 
 Registered inside layers.c.
 
-⚙️ How It Works
-1️⃣ Client → Server (TX Flow)
+#    How It Works
+1️Client → Server (TX Flow)
+```
 Application
 Presentation
 Session
@@ -110,11 +118,11 @@ Transport
 Network
 DataLink
 Physical
-
+```
 
 Each layer adds a header.
 
-2️⃣ Server processing (RX → process → TX)
+2️Server processing (RX → process → TX)
 
 The server:
 
@@ -126,39 +134,47 @@ Re-encapsulates a response
 
 Sends back to client
 
-3️⃣ Python App displays ZIP-ZAG
+3️Python App displays ZIP-ZAG
 
 The Python user app reads:
-
+```
 {
   "direction": "TX",
   "layers": ["Application", "Presentation", ...],
   "payload": "Hello"
 }
-
+```
 
 And prints two layers at a time.
 
-🛠 Build Instructions
+#    Build Instructions
 Build Server
+```
 cd server
 make
+```
 
 Build Client
+```
 cd client
 make
+```
 
-▶️ Run Instructions
+Run Instructions
 Start Server
+```
 ./server
-
+```
 Start Client
+```
 ./client
-
+```
 Start Python Application
+```
 python3 python_app.py
+```
 
-📡 Communication Flow
+#    Communication Flow
 Python User App  ⇄  Client (C OSI stack) ⇄ Server (C OSI stack)
 
 
@@ -166,7 +182,7 @@ Python only receives logs and visualizes progress.
 
 All OSI logic is performed in C on both ends.
 
-🔧 Technologies Used
+#    Technologies Used
 
 C (Server/Client networking + OSI stack)
 
