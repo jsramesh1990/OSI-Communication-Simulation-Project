@@ -2,12 +2,10 @@
 #include <string.h>
 #include "layers.h"
 
-
 // Utility wrapper to print transitions
 void log_layer(const char *layer, const char *data) {
 printf("[%s] Data: %s\n", layer, data);
 }
-
 
 // -------------------- TRANSMIT SIDE --------------------
 void Application_Send(const char *msg) {
@@ -16,13 +14,11 @@ char buffer[256]; sprintf(buffer, "APP{%s}", msg);
 Presentation_Send(buffer);
 }
 
-
 void Presentation_Send(const char *data) {
 log_layer("Presentation", data);
 char buffer[256]; sprintf(buffer, "PRS{%s}", data);
 Session_Send(buffer);
 }
-
 
 void Session_Send(const char *data) {
 log_layer("Session", data);
