@@ -1,8 +1,8 @@
-# OSI 7-Layer Network Model Simulation 
+# OSI 7-Layer Network Model Simulation
 
 A complete implementation of the OSI 7-layer network model in C with real socket communication and Python visualization. This project demonstrates data encapsulation, transmission, and decapsulation across all seven layers with color-coded progress tracking.
 
-[![C Language](https://img.shields.io/badge/C-Programming-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![C Language](https://img.shields.io/badge/C-Programming-blue.svg)](https://en.wikipedia.org/wiki/C_%28programming_language%29)
 [![OSI Model](https://img.shields.io/badge/OSI-7%20Layers-orange.svg)](https://en.wikipedia.org/wiki/OSI_model)
 [![Socket Programming](https://img.shields.io/badge/Socket-Communication-green.svg)](https://en.wikipedia.org/wiki/Network_socket)
 [![Python](https://img.shields.io/badge/Python-3.x-yellow.svg)](https://python.org)
@@ -11,335 +11,437 @@ A complete implementation of the OSI 7-layer network model in C with real socket
 [![Educational](https://img.shields.io/badge/Educational-Project-8b0000.svg)](https://en.wikipedia.org/wiki/Educational_technology)
 [![Makefile](https://img.shields.io/badge/Build-Makefile-lightgrey.svg)](https://en.wikipedia.org/wiki/Makefile)
 
-##  Table of Contents
-- [Overview](#-overview)
-- [Project Structure](#-project-structure)
-- [Architecture](#-architecture)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [OSI Layer Implementation](#-osi-layer-implementation)
-- [Visualization](#-visualization)
-- [Extending the Project](#-extending-the-project)
-- [License](#-license)
+---
 
-##  Overview
+# Table of Contents
 
-This project simulates the complete OSI 7-layer network model with:
-- **C-based client/server** implementing full layer encapsulation/decapsulation
-- **Real socket communication** between processes
-- **Python visualization tool** showing the "zip-zag" data flow
-- **Color-coded layer logs** for easy debugging
-- **Error simulation** capabilities at various layers
+* [Overview](#overview)
+* [Project Structure](#project-structure)
+* [Architecture](#architecture)
+* [Installation](#installation)
+* [Usage](#usage)
+* [OSI Layer Implementation](#osi-layer-implementation)
+* [Visualization](#visualization)
+* [Extending the Project](#extending-the-project)
+* [Testing](#testing)
+* [Performance Metrics](#performance-metrics)
+* [Contributing](#contributing)
+* [License](#license)
 
-Perfect for understanding network protocols, data encapsulation, and socket programming fundamentals.
+---
 
-##  Project Structure
-```
+# Overview
+
+This project simulates the complete OSI 7-layer network model using:
+
+* **C-based client/server architecture**
+* **Real socket communication**
+* **Python-based visualization**
+* **Layer-by-layer encapsulation and decapsulation**
+* **Color-coded logs for debugging**
+* **Error simulation capabilities**
+
+It is designed as an educational project for learning:
+
+* Computer networking fundamentals
+* OSI layer responsibilities
+* Socket programming in C
+* Data encapsulation concepts
+* Client-server communication
+
+---
+
+# Project Structure
+
+```text
 osi-network-simulator/
 │
 ├── src/
 │   ├── main.c              # Main application entry point
-│   ├── layers.h            # Layer function declarations
+│   ├── layers.h            # Function declarations
 │   └── layers.c            # OSI layer implementations
 │
 ├── python/
-│   └── visualizer.py       # Python progress visualizer
+│   └── visualizer.py       # Python visualization tool
 │
 ├── tests/
 │   └── test_communication.sh
 │
-├── Makefile                # Build system
-└── README.md               # This file
+├── Makefile
+└── README.md
 ```
 
-##  Architecture
+---
+
+# Architecture
 
 ```mermaid
 flowchart TD
-    subgraph A[Sender (Encapsulation)]
-        direction LR
-        A1[Application Layer<br/>Raw Data] --> A2[Presentation<br/>Encryption/Format]
-        A2 --> A3[Session<br/>Session Control]
-        A3 --> A4[Transport<br/>TCP/UDP Headers]
-        A4 --> A5[Network<br/>IP Headers]
-        A5 --> A6[Data Link<br/>Frame Headers]
-        A6 --> A7[Physical<br/>Bit Transmission]
+
+    subgraph Sender["Sender (Encapsulation)"]
+        direction TB
+        A1["Application Layer"] --> A2["Presentation Layer"]
+        A2 --> A3["Session Layer"]
+        A3 --> A4["Transport Layer"]
+        A4 --> A5["Network Layer"]
+        A5 --> A6["Data Link Layer"]
+        A6 --> A7["Physical Layer"]
     end
-    
-    subgraph B[Network Medium]
-        B1[Socket Connection<br/>127.0.0.1:8080]
+
+    subgraph Network["Network Medium"]
+        B1["Socket Connection<br/>127.0.0.1:8080"]
     end
-    
-    subgraph C[Receiver (Decapsulation)]
-        direction LR
-        C7[Physical<br/>Bit Reception] --> C6[Data Link<br/>Frame Removal]
-        C6 --> C5[Network<br/>IP Removal]
-        C5 --> C4[Transport<br/>TCP/UDP Removal]
-        C4 --> C3[Session<br/>Session Management]
-        C3 --> C2[Presentation<br/>Decryption/Format]
-        C2 --> C1[Application Layer<br/>Final Data]
+
+    subgraph Receiver["Receiver (Decapsulation)"]
+        direction BT
+        C1["Application Layer"]
+        C2["Presentation Layer"]
+        C3["Session Layer"]
+        C4["Transport Layer"]
+        C5["Network Layer"]
+        C6["Data Link Layer"]
+        C7["Physical Layer"]
+
+        C7 --> C6 --> C5 --> C4 --> C3 --> C2 --> C1
     end
-    
+
     A7 --> B1
     B1 --> C7
-    
-    subgraph D[Python Visualizer]
-        D1[Monitor Progress]
-        D2[Color-coded Output]
-        D3[Zip-Zag Display]
-    end
-    
-    A1 -.-> D1
-    C1 -.-> D1
 ```
 
-##  Installation
+---
 
-### Prerequisites
+# Installation
+
+## Prerequisites
+
+Install GCC and Python:
+
 ```bash
-# Install C compiler and Python
 sudo apt update
-sudo apt install gcc python3 python3-pip
+sudo apt install gcc make python3 python3-pip
+```
 
-# Install Python dependencies
+Install Python dependencies:
+
+```bash
 pip3 install colorama termcolor
 ```
 
-### Build from Source
+---
+
+## Build From Source
+
 ```bash
-# Clone the repository
 git clone https://github.com/yourusername/osi-network-simulator.git
+
 cd osi-network-simulator
 
-# Build the C application
 make
+```
 
-# Verify build
+Verify the executable:
+
+```bash
 ls -la osi
 ```
 
-##  Usage
+---
 
-### Basic Execution
+# Usage
+
+## Basic Execution
+
+Run with default settings:
+
 ```bash
-# Run the simulation with default message
 ./osi
+```
 
-# Run with custom message
+Run with a custom message:
+
+```bash
 ./osi "Hello from OSI layers!"
+```
 
-# Run with verbose output
+Run with verbose output:
+
+```bash
 ./osi -v "Test message"
 ```
 
-### Python Visualization
-```bash
-# Run the Python visualizer
-python3 python/visualizer.py
+---
 
-# Visualize with custom data
+# Python Visualization
+
+Launch the visualizer:
+
+```bash
+python3 python/visualizer.py
+```
+
+Run with custom data:
+
+```bash
 python3 python/visualizer.py --message "Network test"
 ```
 
-### Example Output
-```
- OSI 7-Layer Simulation Started
+---
+
+# Example Output
+
+```text
+OSI 7-Layer Simulation Started
 ──────────────────────────────────────
 
- Layer 7: Application
- Data: "Hello World!"
- Added Application header: AppHdr
+Layer 7: Application
+Data: "Hello World!"
 
- Layer 6: Presentation
- Encrypted data
- Added Presentation header: PresHdr
+Layer 6: Presentation
+Encrypting data...
 
-... [continues through all layers] ...
+Layer 5: Session
+Establishing session...
 
- Layer 1: Physical
- Transmitting bits: 0101010101...
+Layer 4: Transport
+Adding TCP header...
 
- Transmission complete!
+Layer 3: Network
+Adding IP header...
+
+Layer 2: Data Link
+Creating Ethernet frame...
+
+Layer 1: Physical
+Transmitting bits...
+
+Transmission complete!
 ──────────────────────────────────────
 
- Starting Decapsulation...
- Layer 1: Physical → Bits received
- Layer 2: Data Link → Frame processed
+Starting Decapsulation...
 
-... [continues decapsulation] ...
+Layer 1: Physical → Bits received
+Layer 2: Data Link → Frame processed
+Layer 3: Network → IP header removed
+Layer 4: Transport → TCP header removed
+Layer 5: Session → Session closed
+Layer 6: Presentation → Data decrypted
+Layer 7: Application → Final data received
 
- Layer 7: Application
- Final data: "Hello World!"
- Transmission successful!
+Transmission successful!
 ```
 
-## 🔧 OSI Layer Implementation
+---
 
-Each layer implements two main functions:
+# OSI Layer Implementation
 
-| Layer | Function | Responsibility | Example Headers |
-|-------|----------|----------------|-----------------|
-| **7. Application** | `app_send()` / `app_recv()` | User data interface | HTTP, FTP, SMTP |
-| **6. Presentation** | `present_send()` / `present_recv()` | Encryption, compression | SSL, TLS headers |
-| **5. Session** | `session_send()` / `session_recv()` | Session management | Session tokens |
-| **4. Transport** | `transport_send()` / `transport_recv()` | End-to-end communication | TCP/UDP headers |
-| **3. Network** | `network_send()` / `network_recv()` | Routing, addressing | IP headers |
-| **2. Data Link** | `datalink_send()` / `datalink_recv()` | Frame creation, error detection | Ethernet headers |
-| **1. Physical** | `physical_send()` / `physical_recv()` | Bit transmission | Raw bits |
+Each layer implements two primary functions:
 
-### Code Example
+| Layer        | Send Function      | Receive Function   | Responsibility              |
+| ------------ | ------------------ | ------------------ | --------------------------- |
+| Application  | `app_send()`       | `app_recv()`       | User interaction            |
+| Presentation | `present_send()`   | `present_recv()`   | Encryption and formatting   |
+| Session      | `session_send()`   | `session_recv()`   | Session management          |
+| Transport    | `transport_send()` | `transport_recv()` | End-to-end delivery         |
+| Network      | `network_send()`   | `network_recv()`   | Routing and addressing      |
+| Data Link    | `datalink_send()`  | `datalink_recv()`  | Framing and error detection |
+| Physical     | `physical_send()`  | `physical_recv()`  | Bit transmission            |
+
+---
+
+## Example Layer Code
+
 ```c
-// Simplified layer implementation
-void transport_send(char* data) {
-    printf("📦 [Transport] Adding TCP header to: %s\n", data);
-    char* tcp_data = add_header(data, "TCP_HDR");
+void transport_send(char *data) {
+    printf("[Transport] Adding TCP header to: %s\n", data);
+
+    char tcp_data[1024];
+    sprintf(tcp_data, "TCP_HDR|%s", data);
+
     network_send(tcp_data);
 }
 
-void transport_receive(char* data) {
-    printf("📦 [Transport] Removing TCP header\n");
-    char* original_data = remove_header(data, "TCP_HDR");
-    session_receive(original_data);
+void transport_recv(char *data) {
+    printf("[Transport] Removing TCP header\n");
+
+    char *original_data = strstr(data, "|");
+    if (original_data != NULL) {
+        session_recv(original_data + 1);
+    }
 }
 ```
 
-##  Visualization Features
+---
 
-The Python visualizer provides:
+# Visualization
 
-### Color-Coded Output
+The Python visualizer includes:
+
+* Real-time layer tracking
+* Color-coded layer display
+* Animated data flow
+* Timestamp logging
+* Encapsulation/decapsulation visualization
+
+---
+
+## Layer Color Mapping
+
 ```python
-# Layer colors for easy identification
 LAYER_COLORS = {
-    'Application': Fore.GREEN,
-    'Presentation': Fore.CYAN,
-    'Session': Fore.MAGENTA,
-    'Transport': Fore.YELLOW,
-    'Network': Fore.BLUE,
-    'DataLink': Fore.RED,
-    'Physical': Fore.WHITE
+    "Application": "GREEN",
+    "Presentation": "CYAN",
+    "Session": "MAGENTA",
+    "Transport": "YELLOW",
+    "Network": "BLUE",
+    "DataLink": "RED",
+    "Physical": "WHITE"
 }
 ```
 
-### Zip-Zag Progress Display
-```
+---
+
+## Example Progress Display
+
+```text
 ┌──────────────────────────────────────┐
-│      OSI Model Progress Flow         │
+│        OSI Model Data Flow           │
 ├──────────────────────────────────────┤
-│ App     → Pres    → Sess    → Trans  │
-│ Trans   → Network → DataLink→ Phys   │
-│ Phys    → DataLink→ Network → Trans  │
-│ Trans   → Sess    → Pres    → App    │
+│ App → Pres → Sess → Trans            │
+│ Trans → Net → DataLink → Phys        │
+│ Phys → DataLink → Net → Trans        │
+│ Trans → Sess → Pres → App            │
 └──────────────────────────────────────┘
 ```
 
-### Real-time Timestamps
-```
-[2024-01-15 14:30:45] Layer 3: Network processing
-[2024-01-15 14:30:46] Layer 2: Frame created
-```
+---
 
-##  Extending the Project
+# Extending the Project
 
-### Add Error Simulation
+## Error Simulation
+
+Example implementation:
+
 ```c
-// In layers.c
 void simulate_error(int layer, int error_type) {
+
     switch(error_type) {
-        case ERROR_CORRUPTION:
-            printf("❌ Layer %d: Simulating data corruption\n", layer);
+
+        case 1:
+            printf("Layer %d: Data corruption simulated\n", layer);
             break;
-        case ERROR_DROP:
-            printf("❌ Layer %d: Simulating packet drop\n", layer);
+
+        case 2:
+            printf("Layer %d: Packet drop simulated\n", layer);
             break;
-        case ERROR_DELAY:
-            printf("⏱️ Layer %d: Simulating transmission delay\n", layer);
+
+        case 3:
+            printf("Layer %d: Transmission delay simulated\n", layer);
             sleep(2);
             break;
     }
 }
 ```
 
-### Add Command Line Options
-```bash
-# Future enhancement examples
-./osi --error-layer 3 --error-type corruption "Test"
-./osi --verbose --log-file network.log "Data"
-./osi --port 9090 --ip 192.168.1.100 "Remote test"
-```
+---
 
-### Add Multi-threading
-```c
-// Example for parallel layer processing
-pthread_t layer_threads[7];
-for (int i = 0; i < 7; i++) {
-    pthread_create(&layer_threads[i], NULL, process_layer, &layer_data[i]);
-}
-```
+## Future Enhancements
 
-## 🧪 Testing
+Possible additions:
 
-```bash
-# Run the test suite
-cd tests
-./test_communication.sh
-
-# Test specific features
-./osi "Short test"
-./osi "$(cat large_file.txt)"  # Test with large data
-./osi --stress-test 1000       # Send 1000 packets
-```
-
-##  Performance Metrics
-
-The simulation tracks:
-- **Encapsulation time** per layer
-- **Transmission latency**
-- **Decapsulation time** per layer
-- **Total round-trip time**
-- **Memory usage** per layer
-
-##  Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-layer`)
-3. Commit changes (`git commit -m 'Add new error simulation'`)
-4. Push to branch (`git push origin feature/new-layer`)
-5. Open a Pull Request
-
-### Suggested Contributions
-- Add IPv6 support
-- Implement real encryption in Presentation layer
-- Add Wireshark-compatible packet capture
-- Create Docker container for easy deployment
-- Add GUI visualization with Tkinter/PyQt
-
-##  License
-
-MIT License - See LICENSE file for details.
-
-##  Acknowledgments
-
-- Inspired by university networking courses
-- Based on the OSI model standard (ISO/IEC 7498-1)
-- Uses socket programming concepts from Beej's Guide
+* IPv6 support
+* Real encryption using OpenSSL
+* GUI visualization using Tkinter or PyQt
+* Wireshark-compatible packet export
+* Docker support
+* Multi-threaded processing
+* Packet fragmentation simulation
 
 ---
 
-##  Quick Start Guide
+# Testing
+
+Run the test suite:
 
 ```bash
-# 1. Build and run
-make && ./osi "Learning OSI layers!"
+cd tests
 
-# 2. Visualize with Python
+./test_communication.sh
+```
+
+Additional tests:
+
+```bash
+./osi "Short test"
+
+./osi "$(cat large_file.txt)"
+
+./osi --stress-test 1000
+```
+
+---
+
+# Performance Metrics
+
+The simulator can track:
+
+* Encapsulation time
+* Decapsulation time
+* Transmission latency
+* Round-trip time
+* Memory usage per layer
+
+---
+
+# Contributing
+
+1. Fork the repository
+2. Create a feature branch
+
+```bash
+git checkout -b feature/new-feature
+```
+
+3. Commit changes
+
+```bash
+git commit -m "Add new feature"
+```
+
+4. Push to GitHub
+
+```bash
+git push origin feature/new-feature
+```
+
+5. Open a Pull Request
+
+---
+
+# Acknowledgments
+
+* Inspired by university networking courses
+* Based on the OSI model standard (ISO/IEC 7498-1)
+* Socket programming concepts inspired by Beej’s Guide to Network Programming
+
+---
+
+# Quick Start
+
+```bash
+# Build the project
+make
+
+# Run simulation
+./osi "Learning OSI layers!"
+
+# Start visualization
 python3 python/visualizer.py --animate
 
-# 3. Test with errors
-./osi --simulate-errors "Error test"
-
-# 4. Clean up
+# Clean build files
 make clean
 ```
 
-**Ready to explore networking? Start with `./osi "Your message"` and watch the data flow through all seven layers!**
+---
+
+**Start exploring computer networking with a complete OSI layer simulation built in C and Python.**
